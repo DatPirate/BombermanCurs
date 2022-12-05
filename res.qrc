@@ -1,0 +1,28 @@
+<RCC>
+    <qresource prefix="/images">
+        <file>bomberman_block_brick.png</file>
+        <file>bomberman_block_steel.png</file>
+        <file>bomberman_player_down_idle.png</file>
+        <file>bomberman_player_left_idle.png</file>
+        <file>bomberman_player_right_idle.png</file>
+        <file>bomberman_player_up_idle.png</file>
+        <file>bomb.png</file>
+        <file>bomb_explode_center.png</file>
+        <file>bomb_explode_horizontal.png</file>
+        <file>bomb_explode_vertical.png</file>
+        <file>enemy_basic.png</file>
+        <file>enemy_basic_fast.png</file>
+        <file>enemy_fast.png</file>
+        <file>enemy_killer.png</file>
+        <file>enemy_killer_dead.png</file>
+        <file>enemy_basic_fast_dead.png</file>
+        <file>enemy_fast_dead.png</file>
+        <file>enemy_basic_dead.png</file>
+        <file>bomberman_player_dead.png</file>
+        <file>powerup_bonuslife.png</file>
+        <file>powerup_movespeed.png</file>
+        <file>powerup_bombpower.png</file>
+        <file>powerup_maxbombs.png</file>
+        <file>door.png</file>
+    </qresource>
+</RCC>
