@@ -15,6 +15,11 @@ Entity::Entity(QWidget *parent): Element(parent)
     alive = 1;
 }
 
+bool Entity::getAlive()
+{
+    return alive;
+}
+
 void Entity::move_up()
 {
     if(alive){

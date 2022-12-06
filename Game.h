@@ -46,6 +46,7 @@ public slots:
     void pressHelp();
     void pressAbout();
     void removeResetScreen();
+    void timerCountdown();
 private:
     //private methods
     void setBlocks();
@@ -54,6 +55,7 @@ private:
     void setEnemies();
     void restart();
     void resetScreen();
+    void setLevelTimer();
     //private attributes
     int level;
     QGraphicsTextItem* titleText;
@@ -61,6 +63,9 @@ private:
     QPushButton* helpButton;
     QPushButton* aboutButton;
     QTimer* resetScreenTimer;
+    QGraphicsTextItem* timerText;
+    int levelTimer;
+    QTimer* levelTimerCountdown;
 };
 
 #endif // GAME_H

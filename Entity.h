@@ -10,6 +10,7 @@ class Entity:public Element{
 public:
     //constructor
     Entity(QWidget* parent=NULL);
+    bool getAlive();
 public slots:
     //movement methods
     void move_up();
@@ -22,8 +23,8 @@ protected:
     bool burn();
     bool bombCollide();
     void die();
-    bool stop;
     bool alive;
+    bool stop;
     int move_speed;
     int timer_speed;
     int follow_distance;

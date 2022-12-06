@@ -33,6 +33,8 @@ Game::~Game(){
 }
 
 void Game::start(){
+    setInteractive(1);
+    levelTimer = 200;
     scene->setBackgroundBrush(Qt::green);
     noRestart = 1;
     tileMap = new TileMap();
@@ -44,10 +46,12 @@ void Game::start(){
     player->setFlag(QGraphicsItem::ItemIsFocusable);
     player->setFocus();
     centerOn(player);
+    setLevelTimer();
 }
 
 void Game::mainMenu()
 {
+    setInteractive(0);
     titleText = new QGraphicsTextItem(QString("BomberMan"));
     QFont titleFont ("sans serif", 100, QFont::Bold);
     titleText->setFont(titleFont);
@@ -81,6 +85,7 @@ void Game::mainMenu()
 
 void Game::resetScreen()
 {
+    setInteractive(0);
     scene->setBackgroundBrush(Qt::darkCyan);
     if(player_lives<0){
         titleText = new QGraphicsTextItem(QString("YOU LOST"));
@@ -117,6 +122,42 @@ void Game::resetScreen()
     }
 }
 
+void Game::setLevelTimer()
+{
+    setWindowTitle(QString("Time: ") + QString::number(levelTimer));
+    //QFont titleFont ("sans serif", 20, QFont::Normal);
+    //timerText->setFont(titleFont);
+    //int xTitleText = this->x() + this->width()/2 - timerText->boundingRect().width()/2;
+    //int yTitleText = this->y() + 10;
+    //timerText->setPos(pos());
+    //scene->addItem(timerText);
+
+    levelTimerCountdown = new QTimer();
+    connect(levelTimerCountdown, SIGNAL(timeout()), this, SLOT(timerCountdown()));
+    levelTimerCountdown->start(1000);
+}
+
+void Game::timerCountdown()
+{
+    if (levelTimer){
+        levelTimer--;
+        setWindowTitle(QString("Time: ") + QString::number(levelTimer));
+    }else{
+        int setEnemies = 0;
+        QRandomGenerator* randGen = new QRandomGenerator(time(NULL));
+        int randomTile;
+        while (setEnemies<6){
+            randomTile = randGen->bounded(35, 370);
+            if ((randomTile!=63)&&(tileMap->getTile(randomTile)->isOccupied()==0)){
+                Enemy* enemy = new Enemy(3, this);
+                enemy->setElement(tileMap->getTile(randomTile));
+                setEnemies++;
+            }
+        }
+        delete(randGen);
+        levelTimerCountdown->stop();
+    }
+}
 
 void Game::setPaths()
 {
@@ -172,7 +213,8 @@ void Game::nextLevel()
 
 void Game::restart(){
     noRestart = 0;
-    player->clearFocus();
+    levelTimerCountdown->stop();
+    delete(levelTimerCountdown);
     const QList<QGraphicsItem *> items = scene->items();
     for(QGraphicsItem* item: items){
         if(!dynamic_cast<Tile*> (item)){

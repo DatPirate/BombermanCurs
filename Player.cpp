@@ -4,6 +4,7 @@
 #include "Game.h"
 #include "PowerUp.h"
 #include "Door.h"
+#include "Enemy.h"
 
 extern Game* game;
 
@@ -151,6 +152,18 @@ void Player::doorCollision()
     }
 }
 
+void Player::enemyCollision()
+{
+    QList<QGraphicsItem *> colliding_items = collidingItems(Qt::IntersectsItemShape);
+    for (QGraphicsItem* item: colliding_items){
+        if(Enemy* enemy = dynamic_cast<Enemy*> (item)){
+            if(enemy->getAlive()){
+                Player::die();
+            }
+        }
+    }
+}
+
 void Player::centerOnPlayer()
 {
     powerUpCollision();
@@ -160,6 +173,7 @@ void Player::centerOnPlayer()
         if(burn()){
             Player::die();
         }
+        enemyCollision();
     }
     doorCollision();
 }
@@ -167,6 +181,7 @@ void Player::centerOnPlayer()
 void Player::die()
 {
     alive = 0;
+    game->setInteractive(0);
     imagePath = imageDie;
     setImage();
     timer_dead = new QTimer();

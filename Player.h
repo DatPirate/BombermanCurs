@@ -20,8 +20,10 @@ private:
     //reaction to movement keys
     void keyPressEvent(QKeyEvent* event);
     void keyReleaseEvent(QKeyEvent* event);
+    //collisions
     void powerUpCollision();
     void doorCollision();
+    void enemyCollision();
 };
 
 #endif // PLAYER_H
